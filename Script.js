@@ -1,6 +1,6 @@
 /* ========================= */
-/* UPDATED script.js */
-/* HAR SONG KE LIYE FULL CONTROLS */
+/* DJ MAFIA - FULL JS */
+/* REAL WORKING BASS */
 /* ========================= */
 
 const API =
@@ -9,105 +9,152 @@ const API =
 const results =
 document.getElementById("results");
 
-/* AUDIO PLAYERS */
-
-const leftAudio = new Audio();
-const rightAudio = new Audio();
-
-leftAudio.crossOrigin = "anonymous";
-rightAudio.crossOrigin = "anonymous";
-
+/* ========================= */
 /* AUDIO CONTEXT */
+/* ========================= */
 
-const ctx =
-new(window.AudioContext ||
-window.webkitAudioContext)();
+const audioContext =
+new (
+window.AudioContext ||
+window.webkitAudioContext
+)();
 
-/* LEFT DECK */
+/* ========================= */
+/* AUDIO ELEMENTS */
+/* ========================= */
+
+const leftAudio =
+new Audio();
+
+const rightAudio =
+new Audio();
+
+leftAudio.crossOrigin =
+"anonymous";
+
+rightAudio.crossOrigin =
+"anonymous";
+
+/* ========================= */
+/* LEFT AUDIO CHAIN */
+/* ========================= */
 
 const leftSource =
-ctx.createMediaElementSource(leftAudio);
+audioContext.createMediaElementSource(
+leftAudio
+);
 
-const leftBass =
-ctx.createBiquadFilter();
+/* BASS */
 
-leftBass.type = "lowshelf";
+const leftBassFilter =
+audioContext.createBiquadFilter();
 
-leftBass.frequency.value = 200;
+leftBassFilter.type =
+"lowshelf";
 
-const leftTreble =
-ctx.createBiquadFilter();
+leftBassFilter.frequency.value =
+200;
 
-leftTreble.type = "highshelf";
+leftBassFilter.gain.value =
+0;
 
-leftTreble.frequency.value = 3000;
+/* TREBLE */
 
-const leftGain =
-ctx.createGain();
+const leftTrebleFilter =
+audioContext.createBiquadFilter();
 
-leftGain.gain.value = 1;
+leftTrebleFilter.type =
+"highshelf";
 
-/* RIGHT DECK */
+leftTrebleFilter.frequency.value =
+3000;
+
+leftTrebleFilter.gain.value =
+0;
+
+/* CONNECT */
+
+leftSource.connect(
+leftBassFilter
+);
+
+leftBassFilter.connect(
+leftTrebleFilter
+);
+
+leftTrebleFilter.connect(
+audioContext.destination
+);
+
+/* ========================= */
+/* RIGHT AUDIO CHAIN */
+/* ========================= */
 
 const rightSource =
-ctx.createMediaElementSource(rightAudio);
+audioContext.createMediaElementSource(
+rightAudio
+);
 
-const rightBass =
-ctx.createBiquadFilter();
+/* BASS */
 
-rightBass.type = "lowshelf";
+const rightBassFilter =
+audioContext.createBiquadFilter();
 
-rightBass.frequency.value = 200;
+rightBassFilter.type =
+"lowshelf";
 
-const rightTreble =
-ctx.createBiquadFilter();
+rightBassFilter.frequency.value =
+200;
 
-rightTreble.type = "highshelf";
+rightBassFilter.gain.value =
+0;
 
-rightTreble.frequency.value = 3000;
+/* TREBLE */
 
-const rightGain =
-ctx.createGain();
+const rightTrebleFilter =
+audioContext.createBiquadFilter();
 
-rightGain.gain.value = 1;
+rightTrebleFilter.type =
+"highshelf";
 
-/* ANALYSER */
+rightTrebleFilter.frequency.value =
+3000;
 
-const analyser =
-ctx.createAnalyser();
+rightTrebleFilter.gain.value =
+0;
 
-/* CONNECT LEFT */
+/* CONNECT */
 
-leftSource.connect(leftBass);
+rightSource.connect(
+rightBassFilter
+);
 
-leftBass.connect(leftTreble);
+rightBassFilter.connect(
+rightTrebleFilter
+);
 
-leftTreble.connect(leftGain);
+rightTrebleFilter.connect(
+audioContext.destination
+);
 
-leftGain.connect(analyser);
-
-/* CONNECT RIGHT */
-
-rightSource.connect(rightBass);
-
-rightBass.connect(rightTreble);
-
-rightTreble.connect(rightGain);
-
-rightGain.connect(analyser);
-
-analyser.connect(ctx.destination);
-
+/* ========================= */
 /* SONG STORAGE */
+/* ========================= */
 
 let songs = [];
 
+/* ========================= */
 /* SEARCH SONGS */
+/* ========================= */
 
 async function searchSongs(){
 
 const query =
-document.getElementById("searchInput").value;
+document
+.getElementById(
+"searchInput"
+)
+.value;
 
 if(!query) return;
 
@@ -115,7 +162,9 @@ results.innerHTML =
 "Loading Songs...";
 
 const res =
-await fetch(API + query);
+await fetch(
+API + query
+);
 
 const data =
 await res.json();
@@ -124,7 +173,8 @@ results.innerHTML = "";
 
 songs = [];
 
-data.data.results.forEach((song,index)=>{
+data.data.results.forEach(
+(song,index)=>{
 
 const image =
 song.image?.[2]?.url || "";
@@ -135,84 +185,114 @@ song.downloadUrl?.[3]?.url ||
 song.downloadUrl?.[2]?.url;
 
 songs.push({
-name:song.name,
-artist:song.primaryArtists,
-image:image,
-url:url
+
+name:
+song.name,
+
+artist:
+song.primaryArtists,
+
+image:
+image,
+
+url:
+url
+
 });
 
 const card =
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-card.className = "song-card";
+card.className =
+"song-card";
 
 card.innerHTML = `
+
 <img src="${image}">
+
 <h3>${song.name}</h3>
+
 <p>${song.primaryArtists}</p>
 
 <div class="card-buttons">
 
 <button onclick="loadLeft(${index})">
-LEFT DECK
+LEFT
 </button>
 
 <button onclick="loadRight(${index})">
-RIGHT DECK
+RIGHT
 </button>
 
 </div>
+
 `;
 
-results.appendChild(card);
+results.appendChild(
+card
+);
 
 });
 
 }
 
-/* LOAD LEFT */
+/* ========================= */
+/* LOAD SONGS */
+/* ========================= */
 
 function loadLeft(index){
 
-ctx.resume();
-
 const song =
 songs[index];
 
-leftAudio.src = song.url;
+leftAudio.src =
+song.url;
 
-document.getElementById("leftCover").src =
+document
+.getElementById(
+"leftCover"
+).src =
 song.image;
 
-document.getElementById("leftSong").innerText =
+document
+.getElementById(
+"leftSong"
+).innerText =
 song.name;
 
 }
-
-/* LOAD RIGHT */
 
 function loadRight(index){
 
-ctx.resume();
-
 const song =
 songs[index];
 
-rightAudio.src = song.url;
+rightAudio.src =
+song.url;
 
-document.getElementById("rightCover").src =
+document
+.getElementById(
+"rightCover"
+).src =
 song.image;
 
-document.getElementById("rightSong").innerText =
+document
+.getElementById(
+"rightSong"
+).innerText =
 song.name;
 
 }
 
-/* PLAY PAUSE */
+/* ========================= */
+/* PLAY / PAUSE */
+/* ========================= */
 
 function playLeft(){
 
-ctx.resume();
+audioContext.resume();
 
 leftAudio.play();
 
@@ -226,7 +306,7 @@ leftAudio.pause();
 
 function playRight(){
 
-ctx.resume();
+audioContext.resume();
 
 rightAudio.play();
 
@@ -239,73 +319,143 @@ rightAudio.pause();
 }
 
 /* ========================= */
-/* LEFT DECK CONTROLS */
+/* SEEK BARS */
 /* ========================= */
 
-document.getElementById("leftBass")
-.oninput = e=>{
+leftAudio.addEventListener(
+"timeupdate",
+()=>{
 
-leftBass.gain.value =
-e.target.value;
+leftSeek.value =
+
+(leftAudio.currentTime /
+leftAudio.duration)
+*100 || 0;
+
+}
+);
+
+rightAudio.addEventListener(
+"timeupdate",
+()=>{
+
+rightSeek.value =
+
+(rightAudio.currentTime /
+rightAudio.duration)
+*100 || 0;
+
+}
+);
+
+/* SEEK CONTROL */
+
+leftSeek.oninput = ()=>{
+
+leftAudio.currentTime =
+
+(leftSeek.value/100)
+*
+leftAudio.duration;
 
 };
 
-document.getElementById("leftTreble")
-.oninput = e=>{
+rightSeek.oninput = ()=>{
 
-leftTreble.gain.value =
-e.target.value;
+rightAudio.currentTime =
+
+(rightSeek.value/100)
+*
+rightAudio.duration;
 
 };
 
-document.getElementById("leftSpeed")
-.oninput = e=>{
+/* ========================= */
+/* REAL BASS */
+/* ========================= */
+
+leftBass.oninput = e=>{
+
+const value =
+e.target.value;
+
+leftBassFilter.gain.value =
+value;
+
+e.target.style.transform =
+`rotate(${value*4}deg)`;
+
+};
+
+rightBass.oninput = e=>{
+
+const value =
+e.target.value;
+
+rightBassFilter.gain.value =
+value;
+
+e.target.style.transform =
+`rotate(${value*4}deg)`;
+
+};
+
+/* ========================= */
+/* TREBLE */
+/* ========================= */
+
+leftTreble.oninput = e=>{
+
+const value =
+e.target.value;
+
+leftTrebleFilter.gain.value =
+value;
+
+};
+
+rightTreble.oninput = e=>{
+
+const value =
+e.target.value;
+
+rightTrebleFilter.gain.value =
+value;
+
+};
+
+/* ========================= */
+/* SPEED */
+/* ========================= */
+
+leftSpeed.oninput = e=>{
 
 leftAudio.playbackRate =
 e.target.value;
 
 };
 
-document.getElementById("leftVolume")
-.oninput = e=>{
-
-leftGain.gain.value =
-e.target.value;
-
-};
-
-/* ========================= */
-/* RIGHT DECK CONTROLS */
-/* ========================= */
-
-document.getElementById("rightBass")
-.oninput = e=>{
-
-rightBass.gain.value =
-e.target.value;
-
-};
-
-document.getElementById("rightTreble")
-.oninput = e=>{
-
-rightTreble.gain.value =
-e.target.value;
-
-};
-
-document.getElementById("rightSpeed")
-.oninput = e=>{
+rightSpeed.oninput = e=>{
 
 rightAudio.playbackRate =
 e.target.value;
 
 };
 
-document.getElementById("rightVolume")
-.oninput = e=>{
+/* ========================= */
+/* VOLUME */
+/* ========================= */
 
-rightGain.gain.value =
+leftVolume.oninput = e=>{
+
+leftAudio.volume =
+e.target.value;
+
+};
+
+rightVolume.oninput = e=>{
+
+rightAudio.volume =
 e.target.value;
 
 };
@@ -314,53 +464,64 @@ e.target.value;
 /* CROSS FADER */
 /* ========================= */
 
-document.getElementById("crossfader")
-.oninput = e=>{
+crossfader.oninput = e=>{
 
 const value =
 e.target.value;
 
-leftGain.gain.value =
-1 - value / 100;
+leftAudio.volume =
+1 - value/100;
 
-rightGain.gain.value =
-value / 100;
+rightAudio.volume =
+value/100;
 
 };
 
 /* ========================= */
-/* EFFECTS */
+/* FX BUTTONS */
 /* ========================= */
 
 function ultraBass(){
 
-leftBass.gain.value = 25;
+leftBassFilter.gain.value =
+20;
 
-rightBass.gain.value = 25;
+rightBassFilter.gain.value =
+20;
 
 }
 
 function nightcoreMode(){
 
-leftAudio.playbackRate = 1.3;
+leftAudio.playbackRate =
+1.3;
 
-rightAudio.playbackRate = 1.3;
+rightAudio.playbackRate =
+1.3;
 
 }
 
 function slowReverb(){
 
-leftAudio.playbackRate = 0.8;
+leftAudio.playbackRate =
+0.8;
 
-rightAudio.playbackRate = 0.8;
+rightAudio.playbackRate =
+0.8;
 
 }
 
-function karaokeMode(){
+function partyMode(){
 
-leftTreble.gain.value = -10;
+document.body.style.filter =
+"hue-rotate(180deg)";
 
-rightTreble.gain.value = -10;
+setTimeout(()=>{
+
+document.body.style.filter =
+"hue-rotate(0deg)";
+
+},4000);
 
 }
 
@@ -369,7 +530,9 @@ rightTreble.gain.value = -10;
 /* ========================= */
 
 const canvas =
-document.getElementById("visualizer");
+document.getElementById(
+"visualizer"
+);
 
 const c =
 canvas.getContext("2d");
@@ -377,21 +540,14 @@ canvas.getContext("2d");
 canvas.width =
 window.innerWidth;
 
-canvas.height = 140;
-
-analyser.fftSize = 256;
-
-const bufferLength =
-analyser.frequencyBinCount;
-
-const dataArray =
-new Uint8Array(bufferLength);
+canvas.height =
+150;
 
 function animate(){
 
-requestAnimationFrame(animate);
-
-analyser.getByteFrequencyData(dataArray);
+requestAnimationFrame(
+animate
+);
 
 c.clearRect(
 0,
@@ -400,12 +556,10 @@ canvas.width,
 canvas.height
 );
 
-let x = 0;
-
-for(let i=0;i<bufferLength;i++){
+for(let i=0;i<80;i++){
 
 const h =
-dataArray[i];
+Math.random()*120;
 
 const gradient =
 c.createLinearGradient(
@@ -415,20 +569,25 @@ c.createLinearGradient(
 canvas.height
 );
 
-gradient.addColorStop(0,"#00f0ff");
-
-gradient.addColorStop(1,"#ff003c");
-
-c.fillStyle = gradient;
-
-c.fillRect(
-x,
-canvas.height-h/2,
-6,
-h/2
+gradient.addColorStop(
+0,
+"#00d9ff"
 );
 
-x += 8;
+gradient.addColorStop(
+1,
+"#8a2cff"
+);
+
+c.fillStyle =
+gradient;
+
+c.fillRect(
+i*20,
+canvas.height-h,
+12,
+h
+);
 
 }
 

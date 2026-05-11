@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>DJ MAFIA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700;900&display=swap"
+rel="stylesheet"
+>
+
+<style>
+
+/* ===================== */
+/* RESET */
+/* ===================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:'Montserrat',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#06070f,
+#140021,
+#00121c
+);
+
+color:white;
+
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* GLOW BG */
+
+body::before{
+content:"";
+
+position:fixed;
+
+width:450px;
+height:450px;
+
+background:#7b2cff;
+
+top:-150px;
+left:-150px;
+
+filter:blur(180px);
+
+opacity:.45;
+
+z-index:-1;
+}
+
+body::after{
+content:"";
+
+position:fixed;
+
+width:450px;
+height:450px;
+
+background:#00d9ff;
+
+bottom:-150px;
+right:-150px;
+
+filter:blur(180px);
+
+opacity:.45;
+
+z-index:-1;
+}
+
+/* CONTAINER */
+
+.container{
+width:95%;
+max-width:1500px;
+margin:auto;
+padding:25px;
+}
+
+/* TOP */
+
+.top{
+text-align:center;
+margin-bottom:40px;
+}
+
+.top h1{
+
+font-size:95px;
+
+font-family:'Anton',sans-serif;
+
+letter-spacing:8px;
+
+background:
+linear-gradient(
+90deg,
+#00d9ff,
+#7b2cff,
+#ff0099
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.top p{
+opacity:.8;
+letter-spacing:3px;
+margin-top:10px;
+}
+
+/* SEARCH */
+
+.search-box{
+display:flex;
+gap:15px;
+margin-bottom:35px;
+}
+
+.search-box input{
+
+flex:1;
+
+padding:20px;
+
+border:none;
+outline:none;
+
+border-radius:25px;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+color:white;
+
+font-size:16px;
+font-weight:700;
+}
+
+.search-box button{
+
+padding:20px 35px;
+
+border:none;
+
+border-radius:25px;
+
+background:
+linear-gradient(
+135deg,
+#7b2cff,
+#00d9ff
+);
+
+color:white;
+
+font-weight:900;
+
+cursor:pointer;
+}
+
+/* SONGS */
+
+.results{
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+margin-bottom:40px;
+}
+
+.song-card{
+
+background:
+rgba(255,255,255,.06);
+
+backdrop-filter:blur(20px);
+
+padding:15px;
+
+border-radius:30px;
+
+transition:.4s;
+}
+
+.song-card:hover{
+
+transform:
+translateY(-8px);
+
+box-shadow:
+0 0 30px #00d9ff55;
+}
+
+.song-card img{
+
+width:100%;
+height:240px;
+
+object-fit:cover;
+
+border-radius:22px;
+
+margin-bottom:15px;
+}
+
+.song-card h3{
+font-size:18px;
+margin-bottom:5px;
+}
+
+.song-card p{
+opacity:.7;
+margin-bottom:15px;
+font-size:14px;
+}
+
+.card-buttons{
+display:flex;
+gap:10px;
+}
+
+.card-buttons button{
+
+flex:1;
+
+padding:13px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+90deg,
+#7b2cff,
+#00d9ff
+);
+
+color:white;
+
+font-weight:900;
+
+cursor:pointer;
+}
+
+/* DJ DECKS */
+
+.decks{
+display:grid;
+
+grid-template-columns:
+1fr 340px 1fr;
+
+gap:25px;
+
+margin-bottom:40px;
+}
+
+.deck{
+
+background:
+rgba(255,255,255,.06);
+
+backdrop-filter:blur(20px);
+
+padding:25px;
+
+border-radius:35px;
+}
+
+.left-deck{
+box-shadow:
+0 0 25px #7b2cff55;
+}
+
+.right-deck{
+box-shadow:
+0 0 25px #00d9ff55;
+}
+
+.deck h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.deck img{
+
+width:220px;
+height:220px;
+
+display:block;
+margin:auto;
+
+border-radius:50%;
+
+object-fit:cover;
+
+animation:spin 8s linear infinite;
+
+margin-bottom:20px;
+}
+
+@keyframes spin{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+.deck h3{
+text-align:center;
+margin-bottom:20px;
+}
+
+/* PLAY */
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:18px;
+margin-bottom:20px;
+}
+
+.buttons button{
+
+width:70px;
+height:70px;
+
+border:none;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+#7b2cff,
+#00d9ff
+);
+
+color:white;
+
+font-size:24px;
+
+cursor:pointer;
+}
+
+/* SLIDERS */
+
+.slider-box{
+margin-bottom:20px;
+}
+
+.slider-box label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-size:14px;
+font-weight:900;
+}
+
+.slider-box input{
+width:100%;
+accent-color:#00d9ff;
+}
+
+/* CENTER */
+
+.middle{
+
+background:
+rgba(255,255,255,.06);
+
+backdrop-filter:blur(20px);
+
+padding:25px;
+
+border-radius:35px;
+
+display:flex;
+flex-direction:column;
+
+gap:18px;
+}
+
+.middle h2{
+text-align:center;
+font-size:30px;
+}
+
+.middle input{
+width:100%;
+accent-color:#00d9ff;
+}
+
+/* FX BUTTONS */
+
+.effects{
+display:grid;
+gap:12px;
+}
+
+.effects button{
+
+padding:16px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+font-weight:900;
+
+cursor:pointer;
+}
+
+.effects button:hover{
+
+background:
+linear-gradient(
+90deg,
+#7b2cff,
+#00d9ff
+);
+}
+
+/* VISUALIZER */
+
+canvas{
+
+width:100%;
+height:150px;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:30px;
+}
+
+/* FOOTER */
+
+.footer{
+
+margin-top:35px;
+
+padding:30px;
+
+text-align:center;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:30px;
+}
+
+.footer h2{
+
+font-size:28px;
+
+background:
+linear-gradient(
+90deg,
+#00d9ff,
+#7b2cff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.footer a{
+color:#00d9ff;
+font-weight:900;
+text-decoration:none;
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+.decks{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top">
+
+<h1>DJ MAFIA</h1>
+
+<p>
+ULTIMATE DJ MIXER EXPERIENCE
+</p>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search Songs..."
+>
+
+<button onclick="searchSongs()">
+SEARCH
+</button>
+
+</div>
+
+<!-- SONGS -->
+
+<div
+class="results"
+id="results"
+></div>
+
+<!-- DECKS -->
+
+<div class="decks">
+
+<!-- LEFT -->
+
+<div class="deck left-deck">
+
+<h2>LEFT DECK ❤️</h2>
+
+<img
+id="leftCover"
+src="https://i.ibb.co/0jqHpnp/disc.png"
+>
+
+<h3 id="leftSong">
+NO SONG
+</h3>
+
+<div class="buttons">
+
+<button onclick="playLeft()">
+▶
+</button>
+
+<button onclick="pauseLeft()">
+⏸
+</button>
+
+</div>
+
+<!-- SEEK -->
+
+<div class="slider-box">
+
+<label>🎵 SONG SEEK</label>
+
+<input
+type="range"
+id="leftSeek"
+min="0"
+max="100"
+value="0"
+>
+
+</div>
+
+<!-- BASS -->
+
+<div class="slider-box">
+
+<label>🔥 BASS BOOST</label>
+
+<input
+type="range"
+id="leftBass"
+min="0"
+max="2"
+step="0.1"
+value="1"
+>
+
+</div>
+
+<!-- TREBLE -->
+
+<div class="slider-box">
+
+<label>✨ TREBLE</label>
+
+<input
+type="range"
+id="leftTreble"
+min="0.5"
+max="2"
+step="0.1"
+value="1"
+>
+
+</div>
+
+<!-- SPEED -->
+
+<div class="slider-box">
+
+<label>🚀 SPEED</label>
+
+<input
+type="range"
+id="leftSpeed"
+min="0.5"
+max="2"
+step="0.1"
+value="1"
+>
+
+</div>
+
+<!-- VOLUME -->
+
+<div class="slider-box">
+
+<label>🔊 VOLUME</label>
+
+<input
+type="range"
+id="leftVolume"
+min="0"
+max="1"
+step="0.1"
+value="1"
+>
+
+</div>
+
+</div>
+
+<!-- CENTER -->
+
+<div class="middle">
+
+<h2>🎚 DJ FX</h2>
+
+<label>🎚 CROSS FADER</label>
+
+<input
+type="range"
+id="crossfader"
+min="0"
+max="100"
+value="50"
+>
+
+<div class="effects">
+
+<button onclick="ultraBass()">
+🔥 ULTRA BASS
+</button>
+
+<button onclick="nightcoreMode()">
+🚀 NIGHTCORE
+</button>
+
+<button onclick="slowReverb()">
+🌙 SLOW + REVERB
+</button>
+
+<button onclick="partyMode()">
+🎉 PARTY MODE
+</button>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="deck right-deck">
+
+<h2>RIGHT DECK 💙</h2>
+
+<img
+id="rightCover"
+src="https://i.ibb.co/0jqHpnp/disc.png"
+>
+
+<h3 id="rightSong">
+NO SONG
+</h3>
+
+<div class="buttons">
+
+<button onclick="playRight()">
+▶
+</button>
+
+<button onclick="pauseRight()">
+⏸
+</button>
+
+</div>
+
+<div class="slider-box">
+
+<label>🎵 SONG SEEK</label>
+
+<input
+type="range"
+id="rightSeek"
+min="0"
+max="100"
+value="0"
+>
+
+</div>
+
+<div class="slider-box">
+
+<label>🔥 BASS BOOST</label>
+
+<input
+type="range"
+id="rightBass"
+min="0"
+max="2"
+step="0.1"
+value="1"
+>
+
+</div>
+
+<div class="slider-box">
+
+<label>✨ TREBLE</label>
+
+<input
+type="range"
+id="rightTreble"
+min="0.5"
+max="2"
+step="0.1"
+value="1"
+>
+
+</div>
+
+<div class="slider-box">
+
+<label>🚀 SPEED</label>
+
+<input
+type="range"
+id="rightSpeed"
+min="0.5"
+max="2"
+step="0.1"
+value="1"
+>
+
+</div>
+
+<div class="slider-box">
+
+<label>🔊 VOLUME</label>
+
+<input
+type="range"
+id="rightVolume"
+min="0"
+max="1"
+step="0.1"
+value="1"
+>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- VISUALIZER -->
+
+<canvas id="visualizer"></canvas>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<h2>
+SHIVAY
+</h2>
+
+<p>
+
+Powered by
+
+<a
+href="https://shinemusix.netlify.app"
+target="_blank"
+>
+
+SHINE MUSIX
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const API =
+"https://manish-jiosaavn-api.manishjai9527.workers.dev/api/search/songs?query=";
+
+const results =
+document.getElementById("results");
+
+const leftAudio = new Audio();
+const rightAudio = new Audio();
+
+let songs = [];
+
+/* SEARCH */
+
+async function searchSongs(){
+
+const query =
+document.getElementById("searchInput").value;
+
+if(!query) return;
+
+results.innerHTML =
+"Loading Songs...";
+
+const res =
+await fetch(API + query);
+
+const data =
+await res.json();
+
+results.innerHTML = "";
+
+songs = [];
+
+data.data.results.forEach((song,index)=>{
+
+const image =
+song.image?.[2]?.url || "";
+
+const url =
+song.downloadUrl?.[4]?.url ||
+song.downloadUrl?.[3]?.url ||
+song.downloadUrl?.[2]?.url;
+
+songs.push({
+name:song.name,
+artist:song.primaryArtists,
+image:image,
+url:url
+});
+
+const card =
+document.createElement("div");
+
+card.className =
+"song-card";
+
+card.innerHTML = `
+
+<img src="${image}">
+
+<h3>${song.name}</h3>
+
+<p>${song.primaryArtists}</p>
+
+<div class="card-buttons">
+
+<button onclick="loadLeft(${index})">
+LEFT
+</button>
+
+<button onclick="loadRight(${index})">
+RIGHT
+</button>
+
+</div>
+
+`;
+
+results.appendChild(card);
+
+});
+
+}
+
+/* LOAD SONGS */
+
+function loadLeft(index){
+
+const song =
+songs[index];
+
+leftAudio.src =
+song.url;
+
+leftCover.src =
+song.image;
+
+leftSong.innerText =
+song.name;
+
+}
+
+function loadRight(index){
+
+const song =
+songs[index];
+
+rightAudio.src =
+song.url;
+
+rightCover.src =
+song.image;
+
+rightSong.innerText =
+song.name;
+
+}
+
+/* PLAY */
+
+function playLeft(){
+leftAudio.play();
+}
+
+function pauseLeft(){
+leftAudio.pause();
+}
+
+function playRight(){
+rightAudio.play();
+}
+
+function pauseRight(){
+rightAudio.pause();
+}
+
+/* SEEK */
+
+leftAudio.addEventListener(
+"timeupdate",
+()=>{
+
+leftSeek.value =
+(leftAudio.currentTime /
+leftAudio.duration)*100 || 0;
+
+}
+);
+
+rightAudio.addEventListener(
+"timeupdate",
+()=>{
+
+rightSeek.value =
+(rightAudio.currentTime /
+rightAudio.duration)*100 || 0;
+
+}
+);
+
+leftSeek.oninput = ()=>{
+
+leftAudio.currentTime =
+(leftSeek.value/100) *
+leftAudio.duration;
+
+};
+
+rightSeek.oninput = ()=>{
+
+rightAudio.currentTime =
+(rightSeek.value/100) *
+rightAudio.duration;
+
+};
+
+/* BASS */
+
+leftBass.oninput =
+e=>{
+
+leftAudio.volume =
+e.target.value;
+
+};
+
+rightBass.oninput =
+e=>{
+
+rightAudio.volume =
+e.target.value;
+
+};
+
+/* TREBLE */
+
+leftTreble.oninput =
+e=>{
+
+leftAudio.playbackRate =
+e.target.value;
+
+};
+
+rightTreble.oninput =
+e=>{
+
+rightAudio.playbackRate =
+e.target.value;
+
+};
+
+/* SPEED */
+
+leftSpeed.oninput =
+e=>{
+
+leftAudio.playbackRate =
+e.target.value;
+
+};
+
+rightSpeed.oninput =
+e=>{
+
+rightAudio.playbackRate =
+e.target.value;
+
+};
+
+/* VOLUME */
+
+leftVolume.oninput =
+e=>{
+
+leftAudio.volume =
+e.target.value;
+
+};
+
+rightVolume.oninput =
+e=>{
+
+rightAudio.volume =
+e.target.value;
+
+};
+
+/* CROSS FADER */
+
+crossfader.oninput =
+e=>{
+
+const value =
+e.target.value;
+
+leftAudio.volume =
+1 - value/100;
+
+rightAudio.volume =
+value/100;
+
+};
+
+/* FX */
+
+function ultraBass(){
+
+leftAudio.volume = 1;
+rightAudio.volume = 1;
+
+}
+
+function nightcoreMode(){
+
+leftAudio.playbackRate = 1.3;
+rightAudio.playbackRate = 1.3;
+
+}
+
+function slowReverb(){
+
+leftAudio.playbackRate = 0.8;
+rightAudio.playbackRate = 0.8;
+
+}
+
+function partyMode(){
+
+document.body.style.filter =
+"hue-rotate(180deg)";
+
+setTimeout(()=>{
+
+document.body.style.filter =
+"hue-rotate(0deg)";
+
+},4000);
+
+}
+
+/* VISUALIZER */
+
+const canvas =
+document.getElementById("visualizer");
+
+const c =
+canvas.getContext("2d");
+
+canvas.width =
+window.innerWidth;
+
+canvas.height = 150;
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+c.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+for(let i=0;i<80;i++){
+
+const h =
+Math.random()*120;
+
+const gradient =
+c.createLinearGradient(
+0,
+0,
+0,
+canvas.height
+);
+
+gradient.addColorStop(0,"#00d9ff");
+
+gradient.addColorStop(1,"#7b2cff");
+
+c.fillStyle =
+gradient;
+
+c.fillRect(
+i*20,
+canvas.height-h,
+12,
+h
+);
+
+}
+
+}
+
+animate();
+
+</script>
+
+</body>
+</html>

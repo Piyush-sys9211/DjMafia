@@ -1,0 +1,603 @@
+
+/* ========================================= */
+/* DJ MAFIA - MOBILE RESPONSIVE PRO UI */
+/* REPLACE FULL OLD CSS WITH THIS */
+/* ========================================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Montserrat',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#050816,
+#120016,
+#00141f
+);
+
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* BG GLOW */
+
+body::before{
+content:"";
+position:fixed;
+
+width:350px;
+height:350px;
+
+background:#8a2cff;
+
+top:-120px;
+left:-120px;
+
+filter:blur(150px);
+
+opacity:.45;
+
+z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+
+width:350px;
+height:350px;
+
+background:#00d9ff;
+
+bottom:-120px;
+right:-120px;
+
+filter:blur(150px);
+
+opacity:.45;
+
+z-index:-1;
+}
+
+/* CONTAINER */
+
+.container{
+width:100%;
+max-width:1500px;
+margin:auto;
+padding:15px;
+}
+
+/* TOP */
+
+.top{
+text-align:center;
+margin-bottom:25px;
+}
+
+.top h1{
+
+font-size:70px;
+
+font-family:'Anton',sans-serif;
+
+letter-spacing:5px;
+
+background:
+linear-gradient(
+90deg,
+#00d9ff,
+#8a2cff,
+#ff00a6
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+0 0 30px #8a2cff66;
+}
+
+.top p{
+font-size:13px;
+opacity:.8;
+letter-spacing:2px;
+margin-top:6px;
+}
+
+/* SEARCH */
+
+.search-box{
+display:flex;
+gap:10px;
+margin-bottom:25px;
+}
+
+.search-box input{
+
+flex:1;
+
+padding:16px;
+
+border:none;
+outline:none;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+color:white;
+
+font-size:15px;
+font-weight:700;
+}
+
+.search-box button{
+
+padding:16px 22px;
+
+border:none;
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#8a2cff,
+#00d9ff
+);
+
+color:white;
+font-weight:900;
+
+cursor:pointer;
+}
+
+/* SONG CARDS */
+
+.results{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(160px,1fr));
+
+gap:15px;
+
+margin-bottom:25px;
+}
+
+.song-card{
+
+background:
+rgba(255,255,255,.07);
+
+backdrop-filter:blur(20px);
+
+padding:12px;
+
+border-radius:25px;
+
+border:
+1px solid rgba(255,255,255,.07);
+
+transition:.3s;
+}
+
+.song-card:hover{
+
+transform:
+translateY(-5px);
+
+box-shadow:
+0 0 25px #00d9ff44;
+}
+
+.song-card img{
+
+width:100%;
+height:160px;
+
+object-fit:cover;
+
+border-radius:18px;
+
+margin-bottom:10px;
+}
+
+.song-card h3{
+font-size:14px;
+margin-bottom:4px;
+}
+
+.song-card p{
+font-size:11px;
+opacity:.7;
+margin-bottom:10px;
+}
+
+.card-buttons{
+display:flex;
+gap:8px;
+}
+
+.card-buttons button{
+
+flex:1;
+
+padding:10px;
+
+border:none;
+border-radius:12px;
+
+background:
+linear-gradient(
+90deg,
+#8a2cff,
+#00d9ff
+);
+
+color:white;
+
+font-size:12px;
+font-weight:900;
+
+cursor:pointer;
+}
+
+/* DECKS */
+
+.decks{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+/* DJ PANEL */
+
+.deck,
+.middle{
+
+background:
+rgba(255,255,255,.07);
+
+backdrop-filter:blur(20px);
+
+border-radius:28px;
+
+padding:18px;
+
+border:
+1px solid rgba(255,255,255,.07);
+}
+
+.left-deck{
+box-shadow:
+0 0 20px #8a2cff33;
+}
+
+.right-deck{
+box-shadow:
+0 0 20px #00d9ff33;
+}
+
+.deck h2,
+.middle h2{
+
+text-align:center;
+
+font-size:22px;
+
+margin-bottom:18px;
+}
+
+/* DISC */
+
+.deck img{
+
+width:170px;
+height:170px;
+
+display:block;
+margin:auto;
+
+border-radius:50%;
+
+object-fit:cover;
+
+animation:spin 8s linear infinite;
+
+margin-bottom:15px;
+
+box-shadow:
+0 0 25px rgba(255,255,255,.15);
+}
+
+@keyframes spin{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+.deck h3{
+text-align:center;
+font-size:15px;
+margin-bottom:15px;
+}
+
+/* BUTTONS */
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-bottom:18px;
+}
+
+.buttons button{
+
+width:60px;
+height:60px;
+
+border:none;
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+#8a2cff,
+#00d9ff
+);
+
+color:white;
+
+font-size:20px;
+
+cursor:pointer;
+}
+
+/* SEEK BAR */
+
+.seek-box{
+margin-bottom:18px;
+}
+
+.seek-box input{
+width:100%;
+accent-color:#00d9ff;
+}
+
+/* CONTROLS */
+
+.controls{
+display:grid;
+gap:20px;
+}
+
+/* KNOB */
+
+.knob-box{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
+
+.rotate-knob{
+
+-webkit-appearance:none;
+
+width:85px;
+height:85px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+#2d2d2d,
+#111
+);
+
+border:
+4px solid #00d9ff;
+
+box-shadow:
+0 0 25px #00d9ff66;
+
+cursor:pointer;
+
+transition:.2s;
+}
+
+.rotate-knob::-webkit-slider-thumb{
+-webkit-appearance:none;
+width:0;
+height:0;
+}
+
+.knob-box p{
+font-size:13px;
+font-weight:900;
+letter-spacing:1px;
+}
+
+/* RANGE */
+
+.controls label{
+font-size:13px;
+font-weight:900;
+}
+
+.controls input{
+width:100%;
+accent-color:#8a2cff;
+}
+
+/* CENTER FX */
+
+.middle{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+.middle input{
+width:100%;
+accent-color:#00d9ff;
+}
+
+/* FX BUTTONS */
+
+.effects{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.effects button{
+
+padding:13px;
+
+border:none;
+border-radius:15px;
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+font-size:12px;
+font-weight:900;
+
+cursor:pointer;
+}
+
+.effects button:hover{
+
+background:
+linear-gradient(
+90deg,
+#8a2cff,
+#00d9ff
+);
+}
+
+/* VISUALIZER */
+
+canvas{
+
+width:100%;
+height:110px;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:20px;
+
+margin-top:20px;
+}
+
+/* FOOTER */
+
+.footer{
+
+margin-top:25px;
+
+padding:20px;
+
+text-align:center;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:20px;
+}
+
+.footer h2{
+
+font-size:24px;
+
+background:
+linear-gradient(
+90deg,
+#00d9ff,
+#8a2cff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+margin-bottom:8px;
+}
+
+.footer p{
+font-size:13px;
+opacity:.8;
+}
+
+.footer a{
+color:#00d9ff;
+font-weight:900;
+text-decoration:none;
+}
+
+/* ======================== */
+/* TABLET + DESKTOP */
+/* ======================== */
+
+@media(min-width:900px){
+
+.container{
+padding:25px;
+}
+
+.top h1{
+font-size:90px;
+}
+
+.results{
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+}
+
+.song-card img{
+height:240px;
+}
+
+.decks{
+display:grid;
+grid-template-columns:
+1fr 340px 1fr;
+}
+
+.deck img{
+width:220px;
+height:220px;
+}
+
+.effects{
+grid-template-columns:1fr;
+}
+
+}
